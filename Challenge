@@ -1,0 +1,39 @@
+from moviepy.editor import *
+from PIL import Image
+import numpy as np
+
+# Chemins des images (à remplacer par tes fichiers)
+image_paths = [
+    "logo_yource.png",  # Logo Yource
+    "logo_cofidis.png",  # Logo Cofidis
+    "symbole_prix.png",  # Symbole de prix
+    "symbole_quizz.png",  # Symbole de quizz
+    "symbole_cerveau.png",  # Symbole de cerveau
+    "symbole_richesse.png",  # Symbole de richesse
+    "symbole_joker.png",  # Symbole de Joker
+]
+
+# Durée par image (en secondes)
+duration_per_image = 0.8
+
+# Charger les images et les convertir en clips
+clips = []
+for path in image_paths:
+    img = Image.open(path)
+    clip = ImageClip(np.array(img)).set_duration(duration_per_image)
+    clips.append(clip)
+
+# Ajouter des textes
+texts = [
+    TextClip("16 et 17 avril", fontsize=70, color='white', font='Arial-Bold').set_position('center').set_duration(2),
+    TextClip("Chope ton Joker pour l'été !", fontsize=50, color='yellow', font='Arial-Bold').set_position('center').set_duration(2),
+    TextClip("Stay tuned... Le challenge commence bientôt !", fontsize=40, color='white', font='Arial-Bold').set_position('center').set_duration(3),
+    TextClip("Avril à juin – Des prix à gagner !", fontsize=50, color='white', font='Arial-Bold').set_position('center').set_duration(3),
+]
+
+# Combiner les clips et les textes
+video = concatenate_videoclips(clips, method="compose")
+video = CompositeVideoClip([video] + texts)
+
+# Exporter la vidéo
+output_path = "teaser_challenge_y
